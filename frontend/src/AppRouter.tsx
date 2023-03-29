@@ -11,6 +11,7 @@ const AppRouter = (): JSX.Element => {
       <Route path="login" element={<Login />}></Route>
       <Route path="register" element={<Register />}></Route>
       <Route path="home" element={<Home />}></Route>
+      <Route path="add-review" element={<AddReview />}></Route>
       <Route path="review" element={<AddReview />}></Route>
       <Route index element={<Home />} />
     </Routes>
