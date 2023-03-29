@@ -1,7 +1,8 @@
 import MainLayout from "../components/main-layout/MainLayout";
 import RegisterForm from "../components/register/RegisterForm";
 import Grid2 from "@mui/material/Unstable_Grid2";
-import { Typography } from "@mui/material";
+import { Link, Typography } from "@mui/material";
+import React from "react";
 
 const Register = (): JSX.Element => {
   return (
@@ -21,6 +22,9 @@ const Register = (): JSX.Element => {
         <Grid2 xs={12}>
           <RegisterForm />
         </Grid2>
+        <div>
+          <Link href="/login">Already have an account? Log in here</Link>
+        </div>
       </Grid2>
     </MainLayout>
   );

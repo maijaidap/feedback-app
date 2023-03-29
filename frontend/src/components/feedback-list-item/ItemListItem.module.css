@@ -1,0 +1,24 @@
+.listItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 1.5em;
+    border: 1px solid #ccc;
+    padding: 1em;
+    width: 400px;
+    height: 50px;
+    justify-content: space-between;
+    border-radius: 25px;
+  }
+
+  .listItem h2 {
+    font-size: 22px;
+    justify-content: left;
+    text-decoration: none;
+  }
+  
+  .listItem p {
+    justify-content: right;
+  }
+
+
