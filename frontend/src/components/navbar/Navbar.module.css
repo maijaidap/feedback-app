@@ -1,6 +1,6 @@
 .navbar{
     width: 100%;
-    height: 50px;
+    height: 80px;
     background: #000000;
     color: #f1faee;
     display: inline-flex;
@@ -9,12 +9,14 @@
 }
 
 .logo {
-    margin-left: 80px;
+    margin-left: 50px;
+    font-size: 25px;
 }
 
 .logo span {
     font-weight: 500;
     cursor: pointer;
+    color: #f1faee;
 }
 
 .links{

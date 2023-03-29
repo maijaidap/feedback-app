@@ -1,12 +1,15 @@
 import styles from "./Navbar.module.css";
 import { IconButton, Link } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
+import React from "react";
 
 const Navbar = (): JSX.Element => {
   return (
     <nav className={styles.navbar}>
       <div className={styles.logo}>
-        <span>Feedback app</span>
+        <Link href="/home">
+          <span>Feedback app</span>
+        </Link>
       </div>
       <div className={styles.links}>
         <IconButton>
