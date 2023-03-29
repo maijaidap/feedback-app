@@ -1,5 +1,6 @@
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { Button, FormLabel, TextField } from "@mui/material";
+import React from "react";
 
 const RegisterForm = (): JSX.Element => {
   return (

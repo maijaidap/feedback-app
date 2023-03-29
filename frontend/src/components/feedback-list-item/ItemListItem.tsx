@@ -1,7 +1,5 @@
-import { Edit } from "@mui/icons-material";
-import { Box, IconButton, Link, ListItem, Typography } from "@mui/material";
-import Grid2 from "@mui/material/Unstable_Grid2";
-import React, { useState } from "react";
+import { Box, Link, Rating } from "@mui/material";
+import React from "react";
 import styles from "./ItemListItem.module.css";
 
 interface Item {
@@ -18,11 +16,14 @@ interface ListItemProps {
 const ItemListItem = ({ item }: ListItemProps) => {
   return (
     <div className={styles.listItem}>
-      <Link>
+      <Link href="/review">
         <h2>{item.name}</h2>
       </Link>
       <p>
-        {item.avgGrade} ({item.reviewsDone} Reviews)
+        <Box className={styles.rating}>
+          <Rating name="simple-controlled" readOnly value={item.avgGrade} />
+        </Box>
+        ({item.reviewsDone} Reviews)
       </p>
     </div>
   );

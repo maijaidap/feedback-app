@@ -1,0 +1,14 @@
+.rating {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1em;
+    width: 400px;
+    height: 50px;
+    justify-content: space-between;
+  }
+
+  .header {
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
