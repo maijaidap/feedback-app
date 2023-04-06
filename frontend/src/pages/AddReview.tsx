@@ -5,24 +5,6 @@ import NumeralReview from "../components/numeral-review/NumeralReview";
 import { Typography } from "@mui/material";
 import ReviewForm from "../components/review-form/ReviewForm";
 
-interface Item {
-  id: string;
-  name: string;
-  category: string;
-  avgGrade: number;
-  reviewsDone: number;
-}
-
-const items: Item[] = [
-  {
-    id: "1",
-    name: "Item1",
-    category: "Electronics",
-    avgGrade: 8.8,
-    reviewsDone: 3,
-  },
-];
-
 const AddReview = (): JSX.Element => {
   return (
     <MainLayout>

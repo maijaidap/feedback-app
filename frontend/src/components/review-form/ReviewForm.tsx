@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import React from "react";
 import styles from "./ReviewForm.module.css";
@@ -9,9 +9,14 @@ const ReviewForm = (): JSX.Element => {
       <form className={styles.review}>
         <Typography className={styles.header}>Write review:</Typography>
         <textarea className={styles.text}></textarea>
-        <button className={styles.button} type="submit">
+        <Button
+          href="/item"
+          type="submit"
+          variant="contained"
+          style={{ marginTop: 20 }}
+        >
           Submit
-        </button>
+        </Button>
       </form>
     </Grid2>
   );

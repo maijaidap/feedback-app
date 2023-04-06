@@ -15,10 +15,6 @@ const RegisterForm = (): JSX.Element => {
           <TextField aria-labelledby="password" size="small" fullWidth />
         </Grid2>
         <Grid2 xs={12}>
-          <FormLabel id="re-password">Re-enter password:</FormLabel>
-          <TextField aria-labelledby="re-password" size="small" fullWidth />
-        </Grid2>
-        <Grid2 xs={12}>
           <Button type="submit" variant="contained" fullWidth>
             Register
           </Button>

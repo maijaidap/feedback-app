@@ -2,6 +2,7 @@ import MainLayout from "../components/main-layout/MainLayout";
 import LoginForm from "../components/login/LoginForm";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { Link, Typography } from "@mui/material";
+import React from "react";
 
 const Login = (): JSX.Element => {
   return (

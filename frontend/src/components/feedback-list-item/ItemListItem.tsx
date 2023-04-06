@@ -16,7 +16,7 @@ interface ListItemProps {
 const ItemListItem = ({ item }: ListItemProps) => {
   return (
     <div className={styles.listItem}>
-      <Link href="/review">
+      <Link href="/item">
         <h2>{item.name}</h2>
       </Link>
       <p>

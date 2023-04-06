@@ -1,6 +1,7 @@
 import styles from "./MainLayout.module.css";
 import { CSSProperties } from "react";
 import Navbar from "../navbar/Navbar";
+import React from "react";
 
 interface MainLayoutProps {
   width?: CSSProperties["width"];
