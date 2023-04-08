@@ -2,7 +2,8 @@ import MainLayout from "../components/main-layout/MainLayout";
 import RegisterForm from "../components/register/RegisterForm";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { Link, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 
 const Register = (): JSX.Element => {
   return (
