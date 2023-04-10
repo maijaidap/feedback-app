@@ -20,8 +20,11 @@ class UserController (private val userService: UserService) {
 
     @PostMapping("/login")
     fun login(@RequestBody user: User): Boolean {
-        println(userService.login(user.name, user.password))
         return userService.login(user.name, user.password)
     }
 
+    @PostMapping("/register")
+    fun register(@RequestBody user: User): Boolean {
+        return userService.register(user.name, user.password)
+    }
 }

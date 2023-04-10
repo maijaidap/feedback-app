@@ -27,6 +27,7 @@ dependencies {
 	implementation("org.springframework:spring-core:6.0.6")
 	implementation("org.springframework:spring-context:6.0.6")
 	implementation("org.springframework.boot:spring-boot-starter-data-jdbc:3.0.4")
+	implementation("com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5")
 	runtimeOnly("org.postgresql:postgresql:42.5.4")
 	testImplementation("org.springframework.boot:spring-boot-starter-test:3.0.4")
 	testImplementation("io.projectreactor:reactor-test:3.5.4")
