@@ -2,8 +2,7 @@ import MainLayout from "../components/main-layout/MainLayout";
 import LoginForm from "../components/login/LoginForm";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { Link, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { getUsers } from "../api/api";
+import React from "react";
 
 interface User {
   id: number;
@@ -13,21 +12,6 @@ interface User {
 }
 
 const Login = (): JSX.Element => {
-  const [users, setUsers] = useState<User[]>([]);
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await getUsers();
-        setUsers(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchUsers();
-  }, []);
-
   return (
     <MainLayout>
       <Grid2

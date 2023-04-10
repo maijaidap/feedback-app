@@ -2,10 +2,6 @@ import axios from "axios";
 
 const BASE_URL = "http://localhost:8090";
 
-export const getUsers = () => {
-  return axios.get(`${BASE_URL}/users`);
-};
-
 export const login = (username: string, password: string) => {
   return axios.post(`${BASE_URL}/login`, {
     name: username,
