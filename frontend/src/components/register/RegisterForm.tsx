@@ -1,37 +1,43 @@
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { Button, FormLabel, TextField } from "@mui/material";
 import React, { useState } from "react";
-import axios from "axios";
+import { createUser } from "../../api/api";
 
 const RegisterForm = (): JSX.Element => {
-  const [user, setUser] = useState({
-    username: "",
-    password: "",
-  });
+  let [username, setUsername] = useState("");
+  let [password, setPassword] = useState("");
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
+  function handleChangeUsername(e: any) {
+    setUsername(e.target.value);
+  }
+
+  function handleChangePassword(e: any) {
+    setPassword(e.target.value);
+  }
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
     try {
-      const response = await axios.post("/api/users", user);
+      const response = await createUser(username, password);
       console.log(response.data);
 
-      // Reset the form after successful submission
-      setUser({ username: "", password: "" });
+      // Reset form fields after successful submission
+      setUsername("");
+      setPassword("");
+      e.target.reset();
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleChange = (e: { target: { name: string; value: string } }) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
-  };
-
   return (
     <Grid2 container spacing={2} alignItems="center" justifyContent="center">
-      <form id="Register-form">
+      <form id="Register-form" onSubmit={handleSubmit}>
         <Grid2 xs={12}>
           <FormLabel id="email_address">Username:</FormLabel>
           <TextField
-            onChange={handleChange}
+            onChange={handleChangeUsername}
             aria-labelledby="email_address"
             size="small"
             fullWidth
@@ -40,19 +46,14 @@ const RegisterForm = (): JSX.Element => {
         <Grid2 xs={12}>
           <FormLabel id="password">Password:</FormLabel>
           <TextField
-            onChange={handleChange}
+            onChange={handleChangePassword}
             aria-labelledby="password"
             size="small"
             fullWidth
           />
         </Grid2>
         <Grid2 xs={12}>
-          <Button
-            onSubmit={handleSubmit}
-            type="submit"
-            variant="contained"
-            fullWidth
-          >
+          <Button type="submit" variant="contained" fullWidth>
             Register
           </Button>
         </Grid2>

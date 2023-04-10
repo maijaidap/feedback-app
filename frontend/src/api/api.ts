@@ -14,11 +14,10 @@ export const login = (username: string, password: string) => {
   });
 };
 
-export const createUser = (
-  id: number,
-  username: string,
-  password: string,
-  role: string
-) => {
-  return axios.post(`${BASE_URL}/users`, { id, username, password, role });
+export const createUser = (username: string, password: string) => {
+  return axios.post(`${BASE_URL}/register`, {
+    name: username,
+    password: password,
+    role: "",
+  });
 };
