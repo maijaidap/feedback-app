@@ -1,8 +1,11 @@
 package com.example.feedbackapp.services
 
 import com.example.feedbackapp.models.User
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+
 
 enum class UserRole {
     ADMIN,
@@ -11,26 +14,19 @@ enum class UserRole {
 
 @Service
 class UserService(val db: JdbcTemplate) {
-    fun getUsers(): List<User> {
-        return db.query("SELECT id, username, password, role FROM \"user\"") { rs, _ ->
-            User(
-                rs.getInt("id"),
-                rs.getString("username"),
-                rs.getString("password"),
-                rs.getString("role"),
-            )
-        }
-    }
+    @Autowired
+    private val passwordEncoder: PasswordEncoder? = null
 
     fun login(user: String, pass: String): Boolean {
-        val query = "SELECT id FROM \"user\" WHERE username = ? AND password = ?"
-        val result = db.query(query, { rs, _ ->
-            User(
-                rs.getInt("id"),
-                "","",""
-            )
-        }, user, pass)
-        return result.isNotEmpty()
+        val query = "SELECT id FROM \"user\" WHERE username = ?"
+        val id = db.query(query, { rs, _ ->
+            rs.getInt("id")
+        }, user)[0]
+
+        if(id > 0) {
+            return checkPassword(id, pass)
+        }
+        return false
     }
 
     fun register(user: String, pass: String): Boolean {
@@ -38,7 +34,9 @@ class UserService(val db: JdbcTemplate) {
         if(usernameIsTaken(user)){
             return false
         }
-        db.update(insertQuery, user, pass, UserRole.BASIC.name)
+
+        // User data to the database, password encryption with BCrypt
+        db.update(insertQuery, user, passwordEncoder?.encode(pass), UserRole.BASIC.name)
         return true
     }
 
@@ -50,9 +48,20 @@ class UserService(val db: JdbcTemplate) {
                 "","",""
             )
         }, username)
+
         if (result.isEmpty()){
             return false
         }
         return true
+    }
+
+    fun checkPassword(id: Int, password: String): Boolean {
+        val query = "SELECT password FROM \"user\" WHERE id = ?"
+        val dbPassword = db.query(query, { rs, _ ->
+            rs.getString("password")
+        }, id)[0]
+
+        // Encrypting the input password and compare it to the one in the database
+        return passwordEncoder?.matches(password, dbPassword) ?: false
     }
 }
