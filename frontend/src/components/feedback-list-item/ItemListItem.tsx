@@ -3,10 +3,10 @@ import React from "react";
 import styles from "./ItemListItem.module.css";
 
 interface Item {
+  id: string;
   name: string;
-  category: string;
-  avgGrade: number;
-  reviewsDone: number;
+  avgGrade: string;
+  reviewsDone: string;
 }
 
 interface ListItemProps {
@@ -19,12 +19,16 @@ const ItemListItem = ({ item }: ListItemProps) => {
       <Link href="/item">
         <h2>{item.name}</h2>
       </Link>
-      <p>
+      <span>
         <Box className={styles.rating}>
-          <Rating name="simple-controlled" readOnly value={item.avgGrade} />
+          <Rating
+            name="simple-controlled"
+            readOnly
+            value={Number(item.avgGrade)}
+          />
         </Box>
         ({item.reviewsDone} Reviews)
-      </p>
+      </span>
     </div>
   );
 };

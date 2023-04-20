@@ -1,0 +1,20 @@
+[
+    {
+        "id":"1",
+        "grade":"Item1",
+        "review": "Lorem ipsum dolor sit amet, quo semper detracto tacimates ad. Vis no viris ignota conclusionemque. Homero probatus ne qui. Vel ei invenire pertinacia, omnium ponderum no ius. Purto zril vivendo an eam, an has aperiam commune. Nulla altera audire est cu.",
+        "date": "16.3.2023"
+    },
+    {
+        "id":"2",
+        "grade": "3",
+        "review":"Mel ut nisl decore, vix eu voluptatum contentiones. Ei facilis ancillae persequeris per, nostrum fierent at vel. Ei qui odio tincidunt, magna equidem maiestatis an eos. Ex oratio dolorem interpretaris sed. Cum veritus vulputate definitiones et, tantas nonumes cum te, quando accusam reprehendunt no mea. Graeci phaedrum voluptatum eu nam.",
+        "date": "12.3.2023"
+    },
+    {
+        "id":"3",
+        "grade":"Item3",
+        "review": "Homero probatus ne qui. Vel ei invenire pertinacia, omnium ponderum no ius.",
+        "date": "3.4.2023"
+    }
+]

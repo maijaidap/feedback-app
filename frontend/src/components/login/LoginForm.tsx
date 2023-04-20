@@ -1,9 +1,11 @@
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { Button, FormLabel, TextField } from "@mui/material";
-import React, { useState } from "react";
-import { login } from "../../api/api";
+import { useState } from "react";
+import { login, setToken } from "../../api/api";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = (): JSX.Element => {
+  const navigate = useNavigate();
   let [username, setUsername] = useState("");
   let [password, setPassword] = useState("");
 
@@ -20,9 +22,14 @@ const LoginForm = (): JSX.Element => {
 
     try {
       const response = await login(username, password);
-      console.log(response.data);
+      if (response.data.accessToken) {
+        setToken(response.data.accessToken);
+        navigate("/home");
+      } else {
+        alert("Invalid username or password.");
+      }
     } catch (error) {
-      console.error(error);
+        alert("Invalid username or password.");
     }
   };
 
@@ -30,9 +37,9 @@ const LoginForm = (): JSX.Element => {
     <Grid2 container spacing={2} alignItems="center" justifyContent="center">
       <form id="Login-form" onSubmit={handleSubmit}>
         <Grid2 xs={12}>
-          <FormLabel id="email_address">Username:</FormLabel>
+          <FormLabel id="username">Username:</FormLabel>
           <TextField
-            aria-labelledby="email_address"
+            aria-labelledby="username"
             size="small"
             fullWidth
             onChange={handleChangeUsername}
@@ -44,6 +51,7 @@ const LoginForm = (): JSX.Element => {
             aria-labelledby="password"
             size="small"
             fullWidth
+            type="password"
             onChange={handleChangePassword}
           />
         </Grid2>
