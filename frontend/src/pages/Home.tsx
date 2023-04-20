@@ -6,47 +6,55 @@ import ItemListItem from "../components/feedback-list-item/ItemListItem";
 import { getItems } from "../api/api";
 
 interface Item {
-  id: string;
-  name: string;
-  avgGrade: string;
-  reviewsDone: string;
+    id: string;
+    name: string;
+    avggrade: string;
+    reviewsdone: string;
 }
 
 const Home = (): JSX.Element => {
-  const [items, setitems] = useState<Item[]>([]);
+    const [items, setitems] = useState<Item[]>([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await getItems();
-      setitems(result);
-    };
-    fetchData();
-  }, []);
+    useEffect(() => {
+        const fetchData = async () => {
+            let token = localStorage.getItem("token");
 
-  return (
-    <MainLayout>
-      <Grid2
-        container
-        spacing={1}
-        alignItems="center"
-        justifyContent="center"
-        marginTop={5}
-      >
-        <Grid2 xs={12} margin={2}>
-          <Typography variant="h4" display="flex" justifyContent="center">
-            Items
-          </Typography>
-        </Grid2>
-        <List className="full-width">
-          {items.map((item) => (
-            <Grid2 key={item.id} xs={4}>
-              <ItemListItem item={item} />
+            if (token == null) token = "";
+            const result = await getItems(token);
+            console.log(result.data);
+            setitems(result.data);
+        };
+        fetchData();
+    }, []);
+
+    return (
+        <MainLayout>
+            <Grid2
+                container
+                spacing={1}
+                alignItems="center"
+                justifyContent="center"
+                marginTop={5}
+            >
+                <Grid2 xs={12} margin={2}>
+                    <Typography
+                        variant="h4"
+                        display="flex"
+                        justifyContent="center"
+                    >
+                        Items
+                    </Typography>
+                </Grid2>
+                <List className="full-width">
+                    {items.map((item) => (
+                        <Grid2 key={item.id} xs={4}>
+                            <ItemListItem item={item} />
+                        </Grid2>
+                    ))}
+                </List>
             </Grid2>
-          ))}
-        </List>
-      </Grid2>
-    </MainLayout>
-  );
+        </MainLayout>
+    );
 };
 
 export default Home;

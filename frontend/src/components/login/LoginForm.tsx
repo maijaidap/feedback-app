@@ -24,6 +24,7 @@ const LoginForm = (): JSX.Element => {
       const response = await login(username, password);
       if (response.data.accessToken) {
         setToken(response.data.accessToken);
+        localStorage.setItem("isAuthenticated", "1");
         navigate("/home");
       } else {
         alert("Invalid username or password.");

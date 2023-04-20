@@ -16,6 +16,7 @@ const AppRouter = (): JSX.Element => {
       <Route path="item" element={<Item />}></Route>
       <Route index element={<Home />} />
     </Routes>
+    
   );
 };
 

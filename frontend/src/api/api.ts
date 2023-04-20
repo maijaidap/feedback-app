@@ -1,21 +1,13 @@
 import axios from "axios";
-import itemsMock from "./itemsMock.json";
 import reviewsMock from "./reviewsMock.json";
 
 const BASE_URL = "http://localhost:8090";
 
-interface Item {
-  id: string;
-  name: string;
-  avgGrade: string;
-  reviewsDone: string;
-}
-
 interface Review {
-  id: string;
-  grade: string;
-  review: string;
-  date: string;
+    id: string;
+    grade: string;
+    review: string;
+    date: string;
 }
 
 export const setToken = (token: string) => {
@@ -23,51 +15,46 @@ export const setToken = (token: string) => {
 };
 
 export const login = (username: string, password: string) => {
-  return axios.post(`${BASE_URL}/login`, {
-    name: username,
-    password: password,
-    role: "",
-  });
+    return axios.post(`${BASE_URL}/login`, {
+        name: username,
+        password: password,
+        role: "",
+    });
 };
 
 export const register = (username: string, password: string) => {
-  return axios.post(`${BASE_URL}/register`, {
-    name: username,
-    password: password,
-    role: "",
-  });
+    return axios.post(`${BASE_URL}/register`, {
+        name: username,
+        password: password,
+        role: "",
+    });
 };
 
-export const logout = (username: string) => {
-  return axios.post(`${BASE_URL}/logout`, {
-    name: username,
-  });
+export const logout = (token: string) => {
+    return axios.post(`${BASE_URL}/logout`, "", {
+        headers: { Authorization: `Bearer ${token}` },
+    });
 };
 
-export const getItems = () => {
-  // return axios.get(`${BASE_URL}/items`, {});
-  return new Promise<Item[]>((resolve) => {
-    setTimeout(() => {
-      resolve(itemsMock);
-    }, 500);
-  });
+export const getItems = (token: string) => {
+    return axios.get(`${BASE_URL}/getItems`);
 };
 
 export const getItem = () => {
-  return axios.get(`${BASE_URL}/item`, {});
+    return axios.get(`${BASE_URL}/getItem`, {});
 };
 
 export const getReviews = () => {
-  //return axios.post(`${BASE_URL}/items/{id}/reviews`, {});
-  return new Promise<Review[]>((resolve) => {
-    setTimeout(() => {
-      resolve(reviewsMock);
-    }, 500);
-  });
+    //return axios.post(`${BASE_URL}/items/{id}/reviews`, {});
+    return new Promise<Review[]>((resolve) => {
+        setTimeout(() => {
+            resolve(reviewsMock);
+        }, 500);
+    });
 };
 
 export const addReview = (grade: number, review: string) => {
-  /**return axios.post(`${BASE_URL}/items/item{id}/add-review`, {
+    /**return axios.post(`${BASE_URL}/items/item{id}/add-review`, {
     grade: number,
     review: string,
   });**/

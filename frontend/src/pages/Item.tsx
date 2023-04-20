@@ -4,6 +4,7 @@ import MainLayout from "../components/main-layout/MainLayout";
 import ReviewLine from "../components/review/ReviewLine";
 import { getReviews } from "../api/api";
 import { useEffect, useState } from "react";
+import React from "react";
 
 interface Review {
   id: string;
@@ -14,6 +15,9 @@ interface Review {
 
 const Item = (): JSX.Element => {
   const [reviews, setitems] = useState<Review[]>([]);
+  const [isAuthenticated] = useState(
+    localStorage.getItem("isAuthenticated") ?? ""
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,14 +39,26 @@ const Item = (): JSX.Element => {
         <Typography variant="h4" display="flex" justifyContent="center">
           Item
         </Typography>
+        {!isAuthenticated ? (
+        <Typography fontWeight={"bold"}>
+          In order to add reviews, you must first login
+        </Typography>
+      ) : (
+        ""
+      )}
+      {isAuthenticated ? (
         <Button
-          href="/add-review"
-          type="submit"
-          variant="contained"
-          style={{ marginTop: 40, marginBottom: 30 }}
-        >
-          Add review
-        </Button>
+        href="/add-review"
+        type="submit"
+        variant="contained"
+        style={{ marginTop: 40, marginBottom: 30 }}
+      >
+        Add review
+      </Button>
+          ) : (
+            ""
+          )}
+
         {reviews.map((review) => (
           <ReviewLine key={review.id} review={review} />
         ))}
