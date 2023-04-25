@@ -1,4 +1,4 @@
-import { Box, Button, Rating, Typography } from "@mui/material";
+import { Box, Button, FormHelperText, Rating, Typography } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import React, { useState } from "react";
 import styles from "./ReviewForm.module.css";
@@ -10,26 +10,37 @@ const ReviewForm = (itemid: any): JSX.Element => {
     const navigate = useNavigate();
     let [grade, setGrade] = useState("");
     let [writtenReview, setWrittenReview] = useState("");
+    const [reviewIsValid, setReviewIsValid] = useState(false);
 
-    function handleChangeGrade(e: any) {
-        setGrade(e.target.value);
+    function handleChangeGrade(newGrade: string) {
+        setGrade(newGrade);
     }
 
     function handleChangeReview(e: any) {
+        // Check whether the review contains any special characters
+        const hasSpecialChars = /[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(
+            writtenReview
+        );
+        setReviewIsValid(!hasSpecialChars);
         setWrittenReview(e.target.value);
     }
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         try {
-            let token = localStorage.getItem("token")
+            let token = localStorage.getItem("token");
             if (token == null) token = "";
 
-            const response = await addReview(token, grade, writtenReview, itemid);
+            const response = await addReview(
+                token,
+                grade,
+                writtenReview,
+                itemid
+            );
             console.log(response.data);
 
             e.target.reset();
-            navigate(`/items/${itemid}`)
+            navigate(`/items/${itemid}`);
         } catch (error) {
             console.error(error);
         }
@@ -52,17 +63,27 @@ const ReviewForm = (itemid: any): JSX.Element => {
                     value={value}
                     onChange={(event, newValue) => {
                         setValue(newValue);
+                        handleChangeGrade(newValue!!.toString());
                     }}
                 />
             </Grid2>
             <form className={styles.review}>
                 <Typography className={styles.header}>Write review:</Typography>
-                <textarea className={styles.text}></textarea>
+                <textarea
+                    className={styles.text}
+                    onChange={handleChangeReview}
+                ></textarea>
+                {!reviewIsValid && (
+                    <FormHelperText error>
+                        Review text cannot contain special characters.
+                    </FormHelperText>
+                )}
                 <Button
-                    href="/item"
                     type="submit"
                     variant="contained"
                     style={{ marginTop: 20 }}
+                    disabled={!reviewIsValid}
+                    onClick={handleSubmit}
                 >
                     Submit
                 </Button>
