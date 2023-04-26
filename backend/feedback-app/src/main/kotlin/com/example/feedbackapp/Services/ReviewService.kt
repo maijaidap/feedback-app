@@ -28,7 +28,6 @@ class ReviewService(val db: JdbcTemplate,  val userService: UserService) {
         val userId = user?.id
 
         val formatter = DateTimeFormatter.ofPattern("yy-MM-dd")
-        val currentDate = LocalDateTime.now().format(formatter)
         val insertQuery = "INSERT INTO \"review\" (grade, written_review, date_written, item_id, user_id) VALUES (?, ?, CURRENT_DATE, ?, ?)"
 
         db.update(insertQuery, grade, writtenReview, itemId, userId)

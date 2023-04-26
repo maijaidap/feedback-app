@@ -5,10 +5,16 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
+/**
+ * This class implements the UserDetailsService interface provided by Spring Security.
+ * It is responsible for retrieving user details (like username, password, roles, etc.)
+ * from the UserService class, which interacts with the database to fetch user information.
+ * It uses the UserDetailsImpl class to build a UserDetails object from the User entity,
+ * which is returned to Spring Security for authentication and authorization purposes.
+ */
 @Service
 class UserDetailService : UserDetailsService {
     @Autowired

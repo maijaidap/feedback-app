@@ -1,8 +1,6 @@
 package com.example.feedbackapp.services
 
 import com.example.feedbackapp.models.User
-import io.jsonwebtoken.Claims
-import io.jsonwebtoken.Jwts
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder

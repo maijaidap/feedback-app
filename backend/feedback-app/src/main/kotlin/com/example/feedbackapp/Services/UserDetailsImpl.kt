@@ -5,6 +5,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
+/**
+ * This class implements the UserDetails interface provided by Spring Security.
+ * It is responsible for holding user details (like id, username, password, role, and authorities)
+ * and providing them to Spring Security for authentication and authorization purposes.
+ * It also provides a static factory method (build) that creates a new UserDetailsImpl object from a User entity,
+ * which is used by the UserDetailService class to build UserDetails objects.
+ */
 class UserDetailsImpl (
     private val id: Int, private val username: String, @field:JsonIgnore private val password: String, private val role: String,
     private val authorities: Collection<GrantedAuthority>
