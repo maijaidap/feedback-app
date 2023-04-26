@@ -4,8 +4,8 @@ import Grid2 from "@mui/material/Unstable_Grid2";
 interface Review {
     id: string;
     grade: string;
-    review: string;
-    date: string;
+    written_review: string;
+    date_written: string;
 }
 
 interface ListItemProps {
@@ -28,10 +28,14 @@ const ReviewLine = ({ review }: ListItemProps) => {
                         readOnly
                         value={Number(review.grade)}
                     />
-                    <Typography variant="body2">{review.date}</Typography>
+                    <Typography variant="body2">
+                        {review.date_written}
+                    </Typography>
                 </Grid2>
                 <ListItem key="review" divider={true} disableGutters={true}>
-                    <Typography variant="body1">{review.review}</Typography>
+                    <Typography variant="body1">
+                        {review.written_review}
+                    </Typography>
                 </ListItem>
             </Grid2>
         </>

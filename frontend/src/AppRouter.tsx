@@ -7,17 +7,19 @@ import AddReview from "./pages/AddReview";
 import Item from "./pages/Item";
 
 const AppRouter = (): JSX.Element => {
-  return (
-    <Routes>
-      <Route path="login" element={<Login />}></Route>
-      <Route path="register" element={<Register />}></Route>
-      <Route path="home" element={<Home />}></Route>
-      <Route path="add-review" element={<AddReview />}></Route>
-      <Route path="item" element={<Item />}></Route>
-      <Route index element={<Home />} />
-    </Routes>
-    
-  );
+    return (
+        <Routes>
+            <Route path="login" element={<Login />}></Route>
+            <Route path="register" element={<Register />}></Route>
+            <Route path="home" element={<Home />}></Route>
+            <Route
+                path="/items/:itemid/add-review"
+                element={<AddReview />}
+            ></Route>
+            <Route path="/items/:itemid" element={<Item />}></Route>
+            <Route index element={<Home />} />
+        </Routes>
+    );
 };
 
 export default AppRouter;

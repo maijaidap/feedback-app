@@ -1,6 +1,7 @@
 import { Box, Link, Rating } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import styles from "./ItemListItem.module.css";
+import { useNavigate } from "react-router-dom";
 
 interface Item {
     id: string;
@@ -14,9 +15,15 @@ interface ListItemProps {
 }
 
 const ItemListItem = ({ item }: ListItemProps) => {
+    const navigate = useNavigate();
+
+    const handleClick = async () => {
+        navigate(`/items/${item.id}`);
+    };
+
     return (
         <div className={styles.listItem}>
-            <Link href="/item">
+            <Link onClick={handleClick}>
                 <h2>{item.name}</h2>
             </Link>
             <span>

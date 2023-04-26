@@ -6,8 +6,8 @@ const BASE_URL = "http://localhost:8090";
 interface Review {
     id: string;
     grade: string;
-    review: string;
-    date: string;
+    written_review: string;
+    date_written: string;
 }
 
 export const setToken = (token: string) => {
@@ -44,18 +44,33 @@ export const getItem = () => {
     return axios.get(`${BASE_URL}/getItem`, {});
 };
 
-export const getReviews = () => {
-    //return axios.post(`${BASE_URL}/items/{id}/reviews`, {});
-    return new Promise<Review[]>((resolve) => {
-        setTimeout(() => {
-            resolve(reviewsMock);
-        }, 500);
+export const getItemName = (itemId: string) => {
+    return axios.post(`${BASE_URL}/getItemName`, {
+        itemId: itemId,
     });
 };
 
-export const addReview = (grade: number, review: string) => {
-    /**return axios.post(`${BASE_URL}/items/item{id}/add-review`, {
-    grade: number,
-    review: string,
-  });**/
+export const getReviews = (itemId: string) => {
+    return axios.post(`${BASE_URL}/getReviews`, {
+        itemId: itemId,
+    });
+};
+
+export const addReview = (
+    token: string,
+    grade: string,
+    writtenReview: string,
+    itemId: number
+) => {
+    return axios.post(
+        `${BASE_URL}/items/${itemId}/add-review`,
+        {
+            grade: grade,
+            writtenReview: writtenReview,
+            itemId: itemId,
+        },
+        {
+            headers: { Authorization: `Bearer ${token}` },
+        }
+    );
 };

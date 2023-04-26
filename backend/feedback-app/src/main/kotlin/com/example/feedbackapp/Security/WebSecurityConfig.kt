@@ -72,6 +72,8 @@ class WebSecurityConfig {
             .requestMatchers("/login").permitAll()
             .requestMatchers("/register").permitAll()
             .requestMatchers("/getItems").permitAll()
+            .requestMatchers("/getReviews").permitAll()
+            .requestMatchers("/getItemName").permitAll()
             .anyRequest().authenticated()
 
         http.logout().logoutUrl("/logout")

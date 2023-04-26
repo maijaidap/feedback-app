@@ -1,12 +1,7 @@
 package com.example.feedbackapp.controllers
 
-import com.example.feedbackapp.Security.JwtResponse
-import com.example.feedbackapp.Security.JwtUtils
-import com.example.feedbackapp.models.User
-
 import com.example.feedbackapp.services.ItemService
-import com.example.feedbackapp.services.UserService
-import org.springframework.security.access.prepost.PreAuthorize
+import com.example.feedbackapp.models.Item
 import org.springframework.web.bind.annotation.*
 
 /**
@@ -20,4 +15,14 @@ class ItemController (private val itemService: ItemService){
     fun getItems(): List<Any> {
         return itemService.getItems()
     }
+
+    @PostMapping("/getItemName")
+    fun getItem(@RequestBody itemBody: ItemBody): String {
+        return itemService.getItemName(itemBody.id)
+    }
 }
+
+class ItemBody {
+    val id: Int = 0
+}
+
