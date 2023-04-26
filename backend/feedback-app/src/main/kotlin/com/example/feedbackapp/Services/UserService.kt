@@ -1,11 +1,9 @@
 package com.example.feedbackapp.services
 
-import com.example.feedbackapp.Security.JwtUtils
 import com.example.feedbackapp.models.User
-import org.springframework.beans.factory.annotation.Autowired
+import io.jsonwebtoken.Claims
+import io.jsonwebtoken.Jwts
 import org.springframework.jdbc.core.JdbcTemplate
-import org.springframework.security.authentication.AuthenticationManager
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service

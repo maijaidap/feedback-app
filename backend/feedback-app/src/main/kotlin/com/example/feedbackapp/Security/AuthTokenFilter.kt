@@ -7,6 +7,8 @@ import jakarta.servlet.http.HttpServletResponse
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -14,6 +16,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.util.StringUtils
 import org.springframework.web.filter.OncePerRequestFilter
 import java.io.IOException
+import java.util.Arrays.asList
+
 
 /**
  * This class is a filter that intercepts incoming requests and checks if they contain a valid JWT token in their headers.
@@ -43,9 +47,10 @@ class AuthTokenFilter : OncePerRequestFilter() {
             if (jwt != null && jwtUtils!!.validateJwtToken(jwt)) {
                 val username = jwtUtils.getUserNameFromJwtToken(jwt)
                 val userDetails: UserDetails = userDetailsService!!.loadUserByUsername(username)
+                val authority: GrantedAuthority = SimpleGrantedAuthority("myAuthority")
                 val authentication = UsernamePasswordAuthenticationToken(
-                    userDetails,
-                    null,
+                    userDetails.username,
+                    userDetails.password,
                     userDetails.authorities
                 )
                 authentication.details = WebAuthenticationDetailsSource().buildDetails(request)

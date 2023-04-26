@@ -1,10 +1,24 @@
 import MainLayout from "../components/main-layout/MainLayout";
 import Grid2 from "@mui/material/Unstable_Grid2";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Typography } from "@mui/material";
 import ReviewForm from "../components/review-form/ReviewForm";
+import { getItemName } from "../api/api";
+import { useLocation } from "react-router-dom";
 
 const AddReview = (): JSX.Element => {
+    const [itemName, setItemName] = useState("");
+    const location = useLocation();
+    const itemid = location.pathname.split("/")[2];
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const resultItemName = await getItemName(Number(itemid));
+            setItemName(resultItemName.data);
+        };
+        fetchData();
+    }, []);
+
     return (
         <MainLayout>
             <Grid2
@@ -20,7 +34,7 @@ const AddReview = (): JSX.Element => {
                         display="flex"
                         justifyContent="center"
                     >
-                        Item
+                        {itemName}
                     </Typography>
                 </Grid2>
                 <Grid2

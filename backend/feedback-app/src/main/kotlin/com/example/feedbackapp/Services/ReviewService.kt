@@ -1,37 +1,37 @@
 package com.example.feedbackapp.services
 
+import com.example.feedbackapp.models.User
 import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-
 @Service
-class ReviewService(val db: JdbcTemplate) {
+class ReviewService(val db: JdbcTemplate,  val userService: UserService) {
 
     fun getReviews(itemid: Int): List<Any> {
         val query = " SELECT r.item_id, r.id, r.grade, r.written_review, r.date_written " +
                 " FROM review AS r" +
                 " WHERE r.item_id = ?;"
 
-        val result = db.queryForList(query, itemid)
-        result.forEach { rec -> println(rec) }
-        println(result)
-
-        return result
+        return db.queryForList(query, itemid)
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     fun addReview(grade: Int, writtenReview: String, itemId: Int): Boolean {
         val auth: Authentication = SecurityContextHolder.getContext().authentication
         val username: String = auth.principal as String
+        val user: User? = userService.findByUserName(username)
+        val userId = user?.id
 
-        val formatter = DateTimeFormatter.ofPattern("dd-MM-yy")
+        val formatter = DateTimeFormatter.ofPattern("yy-MM-dd")
         val currentDate = LocalDateTime.now().format(formatter)
-        val insertQuery = "INSERT INTO \"review\" (grade, written_review, date_written, item_id, user_id) VALUES (?, ?, ?, ?)"
+        val insertQuery = "INSERT INTO \"review\" (grade, written_review, date_written, item_id, user_id) VALUES (?, ?, CURRENT_DATE, ?, ?)"
 
-        db.update(insertQuery, grade, writtenReview, currentDate, itemId)
+        db.update(insertQuery, grade, writtenReview, itemId, userId)
         return true
     }
 }

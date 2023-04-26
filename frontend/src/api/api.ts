@@ -1,14 +1,6 @@
 import axios from "axios";
-import reviewsMock from "./reviewsMock.json";
 
 const BASE_URL = "http://localhost:8090";
-
-interface Review {
-    id: string;
-    grade: string;
-    written_review: string;
-    date_written: string;
-}
 
 export const setToken = (token: string) => {
     localStorage.setItem("token", token);
@@ -44,9 +36,9 @@ export const getItem = () => {
     return axios.get(`${BASE_URL}/getItem`, {});
 };
 
-export const getItemName = (itemId: string) => {
+export const getItemName = (itemId: number) => {
     return axios.post(`${BASE_URL}/getItemName`, {
-        itemId: itemId,
+        id: itemId,
     });
 };
 
@@ -58,16 +50,16 @@ export const getReviews = (itemId: string) => {
 
 export const addReview = (
     token: string,
-    grade: string,
+    grade: number,
     writtenReview: string,
     itemId: number
 ) => {
     return axios.post(
-        `${BASE_URL}/items/${itemId}/add-review`,
+        `${BASE_URL}/addReview`,
         {
             grade: grade,
-            writtenReview: writtenReview,
-            itemId: itemId,
+            written_review: writtenReview,
+            item_id: itemId,
         },
         {
             headers: { Authorization: `Bearer ${token}` },

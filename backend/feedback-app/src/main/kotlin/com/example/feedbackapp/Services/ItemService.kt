@@ -15,13 +15,13 @@ class ItemService(val db: JdbcTemplate) {
         return db.queryForList(query)
     }
 
-    fun getItemName(itemid: Int): String {
+    fun getItemName(itemId: Int): String {
         val query = " SELECT name " +
                 " FROM item" +
                 " WHERE id = ?;"
 
-        val result = db.queryForList(query, itemid)
+        val result = db.queryForList(query, itemId)
 
-        return result.toString()
+        return result[0].get("Name").toString()
     }
 }

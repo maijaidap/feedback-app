@@ -2,15 +2,17 @@ import { Box, Button, FormHelperText, Rating, Typography } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import React, { useState } from "react";
 import styles from "./ReviewForm.module.css";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { addReview } from "../../api/api";
 
-const ReviewForm = (itemid: any): JSX.Element => {
+const ReviewForm = (): JSX.Element => {
     const [value, setValue] = React.useState<number | null>(1);
-    const navigate = useNavigate();
     let [grade, setGrade] = useState("");
     let [writtenReview, setWrittenReview] = useState("");
     const [reviewIsValid, setReviewIsValid] = useState(false);
+    const navigate = useNavigate();
+    const location = useLocation();
+    const itemid = location.pathname.split("/")[2];
 
     function handleChangeGrade(newGrade: string) {
         setGrade(newGrade);
@@ -33,9 +35,9 @@ const ReviewForm = (itemid: any): JSX.Element => {
 
             const response = await addReview(
                 token,
-                grade,
+                Number(grade),
                 writtenReview,
-                itemid
+                Number(itemid)
             );
             console.log(response.data);
 
@@ -62,8 +64,10 @@ const ReviewForm = (itemid: any): JSX.Element => {
                     size="large"
                     value={value}
                     onChange={(event, newValue) => {
-                        setValue(newValue);
-                        handleChangeGrade(newValue!!.toString());
+                        if (newValue != null) {
+                            setValue(newValue);
+                            handleChangeGrade(newValue.toString());
+                        }
                     }}
                 />
             </Grid2>

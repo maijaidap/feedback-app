@@ -33,7 +33,7 @@ const Item = (): JSX.Element => {
             const resultReviews = await getReviews(itemid);
             setitems(resultReviews.data);
 
-            const resultItemName = await getItemName(itemid);
+            const resultItemName = await getItemName(Number(itemid));
             setItemName(resultItemName.data);
         };
         fetchData();

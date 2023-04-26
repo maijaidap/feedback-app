@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class ReviewController (private val reviewService: ReviewService){
 
-   /** @PostMapping("/addReview")
-    fun addReview(@RequestBody user: User): Boolean {
-        return reviewService.addReview(user.name, user.password)
-    }**/
+   @PostMapping("/addReview")
+    fun addReview(@RequestBody review: AddReviewBody): Boolean {
+       return reviewService.addReview(review.grade, review.written_review, review.item_id)
+    }
 
    @PostMapping("/getReviews")
    fun getReviews(@RequestBody reviewBody: ReviewBody): List<Any> {
@@ -27,4 +27,10 @@ class ReviewController (private val reviewService: ReviewService){
 
 class ReviewBody {
     val itemId: Int = 0
+}
+
+class AddReviewBody {
+    val grade: Int = 0
+    val written_review: String = ""
+    val item_id: Int = 0
 }
