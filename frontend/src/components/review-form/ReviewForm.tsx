@@ -39,9 +39,6 @@ const ReviewForm = (): JSX.Element => {
                 writtenReview,
                 Number(itemid)
             );
-            console.log(response.data);
-
-            e.target.reset();
             navigate(`/items/${itemid}`);
         } catch (error) {
             console.error(error);
