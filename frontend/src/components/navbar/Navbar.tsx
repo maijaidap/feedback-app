@@ -49,7 +49,7 @@ const Navbar = (): JSX.Element => {
                 )}
                 {!isAuthenticated ? (
                     <Link href="/login" style={{ color: "#f1faee" }}>
-                        Kirjaudu
+                        Login
                     </Link>
                 ) : (
                     ""

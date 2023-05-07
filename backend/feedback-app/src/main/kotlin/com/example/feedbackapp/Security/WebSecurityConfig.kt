@@ -58,11 +58,8 @@ class WebSecurityConfig {
 
     /**
      * Security filter chain that determines how incoming requests are handled.
-     * - CSRF token is disabled which can make the application vulnerable to CSRF attacks
      * - HTTP requests are authorized based on URL patterns. Certain URLs like "/login", "/register", and "/getItems" are
      *   allowed for all while any other URL requires authentication
-     * - Cross-Origin Resource Sharing (CORS) is enabled which may lead to security vulnerabilities if not configured correctly
-     * - The authentication provider and JWT token filter are added to the filter chain
      */
     @Bean
     open fun filterChain(http: HttpSecurity): SecurityFilterChain {
