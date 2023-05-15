@@ -11,7 +11,7 @@ const RegisterForm = (): JSX.Element => {
     let [password, setPassword] = useState("");
     const [isUsernameValid, setIsUsernameValid] = useState(false);
 
-    // booleans for password validations
+    // Booleans for password validations
     const [containsUL, setContainsUL] = useState(false); // uppercase letter
     const [containsN, setContainsN] = useState(false); // number
     const [containsSC, setContainsSC] = useState(false); // special character
@@ -51,6 +51,8 @@ const RegisterForm = (): JSX.Element => {
         const hasSpecialChars = /[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(
             usernameValue
         );
+
+        // Update the state based on the result of the special characters check
         setIsUsernameValid(!hasSpecialChars);
     }
 

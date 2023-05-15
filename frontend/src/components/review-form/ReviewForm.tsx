@@ -23,6 +23,7 @@ const ReviewForm = (): JSX.Element => {
         const hasSpecialChars = /[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(
             writtenReview
         );
+
         setReviewIsValid(!hasSpecialChars);
         setWrittenReview(e.target.value);
     }
@@ -30,14 +31,14 @@ const ReviewForm = (): JSX.Element => {
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         try {
-            let token = localStorage.getItem("token");
-            if (token == null) token = "";
+            let token = localStorage.getItem("token"); // Get the token from local storage
+            if (token == null) token = ""; // Set an empty string if token is null
 
             const response = await addReview(
-                token,
-                Number(grade),
-                writtenReview,
-                Number(itemid)
+                token, // Token for authentication
+                Number(grade), // Convert grade to a number
+                writtenReview, // The written review
+                Number(itemid) // Convert itemid to a number
             );
             navigate(`/items/${itemid}`);
         } catch (error) {
@@ -73,6 +74,8 @@ const ReviewForm = (): JSX.Element => {
                 <textarea
                     className={styles.text}
                     onChange={handleChangeReview}
+                    maxLength={1000} // Set the maximum character length to 150
+                    value={writtenReview} // Bind the textarea value to the 'review' state
                 ></textarea>
                 {!reviewIsValid && (
                     <FormHelperText error>

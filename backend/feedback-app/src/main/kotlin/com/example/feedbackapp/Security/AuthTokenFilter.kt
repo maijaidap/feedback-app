@@ -16,7 +16,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.util.StringUtils
 import org.springframework.web.filter.OncePerRequestFilter
 import java.io.IOException
-import java.util.Arrays.asList
 
 
 /**
@@ -43,20 +42,33 @@ class AuthTokenFilter : OncePerRequestFilter() {
         filterChain: FilterChain
     ) {
         try {
+            // Parse the JWT token from the request
             val jwt = parseJwt(request)
+
+            // Check if the JWT token is valid and not expired
             if (jwt != null && jwtUtils!!.validateJwtToken(jwt)) {
+                // Extract the username from the JWT token
                 val username = jwtUtils.getUserNameFromJwtToken(jwt)
+
+                // Load user details from the userDetailsService based on the username
                 val userDetails: UserDetails = userDetailsService!!.loadUserByUsername(username)
+
+                // Create an authentication object with the user details and granted authority
                 val authority: GrantedAuthority = SimpleGrantedAuthority("myAuthority")
                 val authentication = UsernamePasswordAuthenticationToken(
                     userDetails.username,
                     userDetails.password,
                     userDetails.authorities
                 )
+
+                // Set additional details for the authentication object
                 authentication.details = WebAuthenticationDetailsSource().buildDetails(request)
+
+                // Set the authentication object in the security context
                 SecurityContextHolder.getContext().authentication = authentication
             }
         } catch (e: Exception) {
+            // Log an error if user authentication cannot be set
             Companion.logger.error("Cannot set user authentication: {}", e)
         }
         filterChain.doFilter(request, response)
@@ -66,7 +78,11 @@ class AuthTokenFilter : OncePerRequestFilter() {
      * Parses the Authorization header of the incoming request and returns the JWT token.
      */
     private fun parseJwt(request: HttpServletRequest): String? {
+        // Get the value of the Authorization header from the request
         val headerAuth = request.getHeader("Authorization")
+
+        // Check if the header value is not empty and starts with "Bearer "
+        // If true, extract and return the JWT token
         return if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {
             headerAuth.substring(7, headerAuth.length)
         } else null

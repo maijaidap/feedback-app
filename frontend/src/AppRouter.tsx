@@ -13,6 +13,10 @@ const AppRouter = (): JSX.Element => {
             <Route path="login" element={<Login />}></Route>
             <Route path="register" element={<Register />}></Route>
             <Route path="home" element={<Home />}></Route>
+            <Route path="/items/:itemid" element={<Item />}></Route>
+            <Route index element={<Home />} />
+
+            {/* Route for adding a review (protected by PrivateRoute) */}
             <Route
                 path="/items/:itemid/add-review"
                 element={
@@ -21,8 +25,6 @@ const AppRouter = (): JSX.Element => {
                     </PrivateRoute>
                 }
             />
-            <Route path="/items/:itemid" element={<Item />}></Route>
-            <Route index element={<Home />} />
         </Routes>
     );
 };

@@ -24,15 +24,15 @@ import org.springframework.web.bind.annotation.*
 @RestController
 class UserController (private val userService: UserService) {
 
-    /** The authentication manager is used to authenticate a user based on their credentials **/
+    /** The authentication manager is used to authenticate a user based on their credentials */
     @Autowired
     var authenticationManager: AuthenticationManager? = null
 
-    /** JwtUtils class is used to generate and validate JWT tokens **/
+    /** JwtUtils class is used to generate and validate JWT tokens */
     @Autowired
     var jwtUtils: JwtUtils? = null
 
-    /** The service that handles user management **/
+    /** The service that handles user management */
     @Autowired
     private val service: UserService? = null
 
@@ -41,16 +41,24 @@ class UserController (private val userService: UserService) {
         return userService.register(user.name, user.password)
     }
 
+    /** Authenticates a user and generates a JWT token */
     @PostMapping("/login")
     fun authenticateUser(@RequestBody user: User): ResponseEntity<*>? {
+        // Authenticate the user using the provided credentials
         val authentication: Authentication = authenticationManager!!.authenticate(
             UsernamePasswordAuthenticationToken(user.name, user.password)
         )
 
+        // Set the authenticated user in the security context
         SecurityContextHolder.getContext().authentication = authentication
+
+        // Generate a JWT token for the authenticated user
         val jwt: String = jwtUtils!!.generateJwtToken(authentication)
+
+        // Get the details of the authenticated user
         val userDetails = authentication.principal as UserDetailsImpl
-        println(jwt)
+
+        // Return the JWT token in a response entity
         return ResponseEntity.ok<Any>(
             JwtResponse(
                 jwt,

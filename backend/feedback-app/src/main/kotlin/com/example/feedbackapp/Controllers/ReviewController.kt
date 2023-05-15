@@ -1,6 +1,5 @@
 package com.example.feedbackapp.controllers
 
-import com.example.feedbackapp.models.Review
 import com.example.feedbackapp.services.ReviewService
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.PostMapping

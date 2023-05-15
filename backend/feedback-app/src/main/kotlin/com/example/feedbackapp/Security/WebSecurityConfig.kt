@@ -35,11 +35,19 @@ class WebSecurityConfig {
     @Autowired
     var userDetailsService: UserDetailsService? = null
 
-    /** Set up the DaoAuthenticationProvider with the UserDetailsService and PasswordEncoder **/
+    /** Set up the DaoAuthenticationProvider with the UserDetailsService and PasswordEncoder
+     * This configuration ensures that the authentication process in the application uses the UserDetailsService to
+     * load user details and the specified PasswordEncoder for password encoding and comparison.
+     */
     @Bean
     fun authenticationProvider(): DaoAuthenticationProvider? {
+        // Create a new instance of DaoAuthenticationProvider
         val authProvider = DaoAuthenticationProvider()
+
+        // Set the PasswordEncoder implementation to encode and compare passwords
         authProvider.setUserDetailsService(userDetailsService)
+
+        // Return the configured DaoAuthenticationProvider
         authProvider.setPasswordEncoder(encoder())
         return authProvider
     }
@@ -63,8 +71,10 @@ class WebSecurityConfig {
      */
     @Bean
     open fun filterChain(http: HttpSecurity): SecurityFilterChain {
-        //TODO: Solve csrf-token problems in order to enable csrf
+        // Disable CSRF protection (TODO: Solve csrf-token problems in order to enable CSRF)
         http.csrf().disable()
+
+        // Configure authorization rules for incoming HTTP requests
         http.authorizeHttpRequests()
             .requestMatchers("/login").permitAll()
             .requestMatchers("/register").permitAll()
@@ -73,24 +83,46 @@ class WebSecurityConfig {
             .requestMatchers("/getItemName").permitAll()
             .anyRequest().authenticated()
 
+        // Configure logout settings
         http.logout().logoutUrl("/logout")
             .permitAll().logoutSuccessHandler((HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK)))
 
+        // Configure authentication provider
         http.authenticationProvider(authenticationProvider())
+
+        // Add custom authentication JWT token filter
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter::class.java)
+
+        // Enable Cross-Origin Resource Sharing (CORS)
         http.cors()
 
+        // Build and return the configured SecurityFilterChain
         return http.build()
     }
 
+    /**
+     * Configures a CorsConfigurationSource bean for CORS (Cross-Origin Resource Sharing) settings.
+     * This allows cross-origin requests from all origins, with permitted methods of GET, POST, and OPTIONS,
+     * and allows all headers to be included in the request.
+     */
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource? {
+        // Create a new CorsConfiguration instance
         val configuration = CorsConfiguration()
-        configuration.allowedOrigins = Arrays.asList("*")
-        configuration.allowedMethods = Arrays.asList("GET", "POST", "OPTIONS")
-        configuration.allowedHeaders = Arrays.asList("*")
+
+        // Set the allowed origins for cross-origin requests
+        configuration.allowedOrigins = listOf("*")
+
+        // Set the allowed HTTP methods
+        configuration.allowedMethods = listOf("GET", "POST", "OPTIONS")
+
+        // Set the allowed headers
+        configuration.allowedHeaders = listOf("*")
         val source = UrlBasedCorsConfigurationSource()
+
+        // Register the CorsConfiguration with the source for all URL patterns
         source.registerCorsConfiguration("/**", configuration)
+
         return source
     }
 

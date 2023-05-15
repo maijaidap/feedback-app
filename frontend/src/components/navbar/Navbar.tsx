@@ -10,14 +10,15 @@ const Navbar = (): JSX.Element => {
         localStorage.getItem("isAuthenticated") ?? ""
     );
 
-    const navigate = useNavigate();
-
     const handleLogout = async () => {
         try {
             // Get the token from local storage
             let token = localStorage.getItem("token");
 
+            // If the token is null, set it as an empty string
             if (token == null) token = "";
+
+            // Send a logout request using the logout function
             const response = logout(token);
             console.log(response);
 

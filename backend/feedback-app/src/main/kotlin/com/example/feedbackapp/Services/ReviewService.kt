@@ -20,14 +20,20 @@ class ReviewService(val db: JdbcTemplate,  val userService: UserService) {
         return db.queryForList(query, itemid)
     }
 
+    /**
+     * Adds a review for an item.
+     * Only users with the 'ROLE_USER' role are authorized to call this function.
+     */
     @PreAuthorize("hasRole('ROLE_USER')")
     fun addReview(grade: Int, writtenReview: String, itemId: Int): Boolean {
+
+        // Retrieve the currently authenticated user
         val auth: Authentication = SecurityContextHolder.getContext().authentication
         val username: String = auth.principal as String
         val user: User? = userService.findByUserName(username)
         val userId = user?.id
 
-        val formatter = DateTimeFormatter.ofPattern("yy-MM-dd")
+        // Insert the review into the "review" table
         val insertQuery = "INSERT INTO \"review\" (grade, written_review, date_written, item_id, user_id) VALUES (?, ?, CURRENT_DATE, ?, ?)"
 
         db.update(insertQuery, grade, writtenReview, itemId, userId)

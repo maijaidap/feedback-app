@@ -1,7 +1,6 @@
 package com.example.feedbackapp.controllers
 
 import com.example.feedbackapp.services.ItemService
-import com.example.feedbackapp.models.Item
 import org.springframework.web.bind.annotation.*
 
 /**

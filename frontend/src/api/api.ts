@@ -2,6 +2,7 @@ import axios from "axios";
 
 const BASE_URL = "http://localhost:8090";
 
+// Set the token in the local storage
 export const setToken = (token: string) => {
     localStorage.setItem("token", token);
 };

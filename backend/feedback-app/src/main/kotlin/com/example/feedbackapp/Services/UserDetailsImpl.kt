@@ -50,10 +50,12 @@ class UserDetailsImpl (
         return true
     }
 
-    // This method creates a new UserDetailsImpl object from a User object.
-    // It uses the id, name, password, role, and a single basic permission to create the UserDetailsImpl object.
-    // Note that the password field is marked as @JsonIgnore to prevent it from being serialized and returned to API
-    // responses, which would be a security risk.
+    /**
+     * This method creates a new UserDetailsImpl object from a User object.
+     * It uses the id, name, password, role, and a single basic permission to create the UserDetailsImpl object.
+     * Note that the password field is marked as @JsonIgnore to prevent it from being serialized and returned to API
+     * responses, which would be a security risk.
+     */
     companion object {
         private const val serialVersionUID = 1L
         fun build(user: User): UserDetailsImpl {
@@ -67,7 +69,7 @@ class UserDetailsImpl (
         }
     }
 
-    // This method checks whether the current UserDetailsImpl object is equal to another object.
+    /** This method checks whether the current UserDetailsImpl object is equal to another object. */
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if ((other == null) || (javaClass != other.javaClass)) return false
